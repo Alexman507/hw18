@@ -16,7 +16,7 @@ class DirectorSchema(Schema):
     name = fields.Str()
 
 
-class Movie(db.Model):
+class MovieSchema(Schema):
     id = fields.Int()
     title = fields.Str()
     description = fields.Str()

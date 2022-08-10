@@ -4,10 +4,18 @@
 
 # Пример
 
-# class BookService:
-#
-#     def __init__(self, book_dao: BookDAO):
-#         self.book_dao = book_dao
-#
-#     def get_books(self) -> List["Book"]:
-#         return self.book_dao.get_books()
+from dao.model.models import Director
+from dao.director import DirectorDAO
+
+
+class DirectorService:
+
+    def __init__(self, director_dao: DirectorDAO):
+        self.director_dao = director_dao
+
+    def get_directors(self) -> list[Director]:
+        return self.director_dao.get_all_directors()
+
+    def get_director_by(self, id):
+        return self.director_dao.get_director_by_id(id)
+

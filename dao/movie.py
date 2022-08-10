@@ -24,6 +24,11 @@ class MovieDAO:
     def get_movie_by_year(self, year):
         return self.session.query(Movie).filter(Movie.year == year).all()
 
+    def get_movies_by_many_filters(self, **kwargs):
+        return self.session.query(Movie).filter_by(
+            **{key: value for key, value in kwargs.items() if value}
+        ).all()
+
     def create(self, **kwargs):
         try:
             self.session.add(
@@ -36,9 +41,9 @@ class MovieDAO:
             print(f"Не удалось добавить новый фильм\n{e}")
             self.session.rollback()
 
-    def update(self, **kwargs):
+    def update(self, kwargs: dict):
         try:
-            self.session.query(Movie).filter(Movie.id == kwargs.get("id")).update(**kwargs)
+            self.session.query(Movie).filter(Movie.id == kwargs.get("id")).update(kwargs)
             self.session.commit()
         except Exception as e:
             print(f"Не удалось обновить новый фильм\n{e}")

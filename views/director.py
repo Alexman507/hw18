@@ -1,26 +1,20 @@
 from flask_restx import Resource, Namespace
 
+from dao.model.schema import DirectorSchema
+from implemented import director_service
+
 director_ns = Namespace('director')
+director_schema = DirectorSchema(many=True)
 
 
 @director_ns.route('/')
-@director_ns.param("director_id")
-@director_ns.param("director_id")
-@director_ns.param("year")
 class DirectorsView(Resource):
     def get(self):
         """
         Получение всех фильмов
         :return:
         """
-        return "", 200
-
-    def post(self):
-        """
-        Добавление нового фильма
-        :return:
-        """
-        return "", 201
+        return director_schema.dump(director_service.get_directors()), 200
 
 
 @director_ns.route('/<int:director_id>')
@@ -30,18 +24,4 @@ class DirectorView(Resource):
         Получение всех фильмов по ID
         :return:
         """
-        return "", 200
-
-    def put(self):
-        """
-        Обновить фильм по id
-        :return:
-        """
-        return "", 201
-
-    def delete(self):
-        """
-        Удалить фильм по id
-        :return:
-        """
-        return "", 201
+        return director_schema.dump([director_service.get_director_by(director_id)]), 200

@@ -1,47 +1,27 @@
 from flask_restx import Resource, Namespace
 
+from dao.model.schema import GenreSchema
+from implemented import genre_service
+
 genre_ns = Namespace('genre')
+genre_schema = GenreSchema(many=True)
 
 
 @genre_ns.route('/')
-@genre_ns.param("director_id")
-@genre_ns.param("genre_id")
-@genre_ns.param("year")
 class GenresView(Resource):
     def get(self):
         """
-        Получение всех фильмов
+        Получение всех жанров
         :return:
         """
-        return "", 200
-
-    def post(self):
-        """
-        Добавление нового фильма
-        :return:
-        """
-        return "", 201
+        return genre_schema.dump(genre_service.get_genres()), 200
 
 
 @genre_ns.route('/<int:genre_id>')
 class GenreView(Resource):
     def get(self, genre_id: int):
         """
-        Получение всех фильмов по ID
+        Получение жанра по ID
         :return:
         """
-        return "", 200
-
-    def put(self):
-        """
-        Обновить фильм по id
-        :return:
-        """
-        return "", 201
-
-    def delete(self):
-        """
-        Удалить фильм по id
-        :return:
-        """
-        return "", 201
+        return genre_schema.dump([genre_service.get_genre_by(genre_id)]), 200

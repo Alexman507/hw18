@@ -8,7 +8,7 @@ movie_schema = MovieSchema(many=True)
 movie_schema_one = MovieSchema()
 
 
-# @movie_ns.route('/')
+@movie_ns.route('/')
 # @movie_ns.param("director_id")
 # @movie_ns.param("genre_id")
 # @movie_ns.param("year")
@@ -26,15 +26,16 @@ class MoviesView(Resource):
                 id=request.args.get("id")
             )
             )
+        if director_id := request.args.get("director_id"):
+            return movie_schema.dump(movie_service.get_movie_by(director_id=director_id))
+        elif genre_id := request.args.get("genre_id"):
+            return movie_schema.dump(movie_service.get_genre_by(genre_id=genre_id))
+        elif year := request.args.get("year"):
+            return movie_schema.dump(movie_service.get_movie_by(year=year))
         else:
             return movie_schema.dump(movie_service.get_movies()), 200
 
-        # if director_id := request.args.get("director_id"):
-        #     return movie_schema.dump(movie_service.get_movie_by(director_id=director_id))
-        # elif genre_id := request.args.get("genre_id"):
-        #     return movie_schema.dump(movie_service.get_genre_by(genre_id=genre_id))
-        # elif year := request.args.get("year"):
-        #     return movie_schema.dump(movie_service.get_movie_by(year=year))
+
 
     def post(self):
         """

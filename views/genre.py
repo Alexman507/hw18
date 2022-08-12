@@ -3,7 +3,7 @@ from flask_restx import Resource, Namespace
 from dao.model.schema import GenreSchema
 from implemented import genre_service
 
-genre_ns = Namespace('genre')
+genre_ns = Namespace('genres')
 genre_schema = GenreSchema(many=True)
 
 

@@ -13,13 +13,13 @@ class MovieDAO:
         return self.session.query(Movie).all()
 
     def get_movie_by_id(self, id):
-        return self.session.query(Movie).filter(Movie.id == id).one()
+        return self.session.query(Movie).filter(Movie.id == id).all()
 
     def get_movie_by_director_id(self, director_id):
-        return self.session.query(Movie).filter(Movie.director_id == director_id).one()
+        return self.session.query(Movie).filter(Movie.director_id == director_id).all()
 
     def get_movie_by_genre_id(self, genre_id):
-        return self.session.query(Movie).filter(Movie.genre_id == genre_id).one()
+        return self.session.query(Movie).filter(Movie.genre_id == genre_id).all()
 
     def get_movie_by_year(self, year):
         return self.session.query(Movie).filter(Movie.year == year).all()
